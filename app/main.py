@@ -43,3 +43,11 @@ def get_status(item_id: int):
         if status["id"] == item_id:
             return status["name"]
     return {"error": "Item not found"}
+
+
+@app.get("/toggle/{item_id}")
+def toggle_status(item_id: int, q: Union[str, None] = None):
+    for status in timerStatuses:
+        if status["id"] == item_id:
+            status["name"] = "Active" if status["name"] == "Inactive" else "Inactive"
+    return {"item_id": item_id, "q": q, "timerStatuses": timerStatuses}
